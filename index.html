@@ -34,12 +34,14 @@
             --shadow-hover: 0 8px 20px rgba(12, 35, 64, 0.12);
         }
 
-        body {
+        /* Prevent scrollbars inside iframe */
+        html, body {
+            margin: 0;
+            padding: 4px;
+            overflow: hidden;
+            background-color: transparent;
             font-family: var(--font-main);
             color: var(--ttn-slate);
-            background-color: transparent;
-            margin: 0;
-            padding: 12px;
         }
 
         h1, h2, h3, .heading-font {
@@ -85,11 +87,12 @@
             background-color: #F8FAFC;
         }
 
-        /* Video element styling */
+        /* Video element styling with compact height constraint */
         video {
             border-radius: 6px;
             width: 100%;
-            height: auto;
+            max-height: 250px;
+            object-fit: cover;
             background-color: #000000;
             display: block;
         }
@@ -317,6 +320,25 @@
                     }
                 }
             });
+
+            // Notify parent iframe container of height changes
+            sendHeightToParent();
+        }
+
+        /**
+         * Calculates content height and posts to parent window (Mindsmith AI / iframe host)
+         */
+        function sendHeightToParent() {
+            setTimeout(() => {
+                const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+                window.parent.postMessage({ frameHeight: height }, '*');
+            }, 320); // Sync with accordion transition duration
+        }
+
+        // Automatic height observer for dynamic resizing
+        if ('ResizeObserver' in window) {
+            const ro = new ResizeObserver(() => sendHeightToParent());
+            ro.observe(document.body);
         }
     </script>
 
