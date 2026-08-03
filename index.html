@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,14 +47,17 @@
             --shadow-main: 0 4px 12px rgba(12, 35, 64, 0.08);
         }
 
-        body {
+        /* Prevent all iframe scrollbars & dead space */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            overflow: hidden;
+            background-color: transparent;
             font-family: 'Inter', sans-serif;
             color: var(--ttn-slate);
-            background-color: transparent;
-            margin: 0;
-            padding: 12px;
-            overflow-x: hidden;
-            overflow-y: auto;
         }
 
         /* Focus state according to TTN Library standard */
@@ -105,10 +108,10 @@
             transform: rotate(45deg);
         }
 
-        /* Video styling */
+        /* Video styling tuned for compact embed height */
         video {
             width: 100%;
-            max-height: 280px;
+            max-height: 220px;
             object-fit: cover;
             border-radius: 6px;
             background-color: #0C2340;
@@ -116,9 +119,9 @@
         }
     </style>
 </head>
-<body class="flex flex-col justify-start">
+<body class="p-2 sm:p-3">
 
-    <div class="max-w-2xl mx-auto w-full space-y-3">
+    <div id="app-container" class="max-w-2xl mx-auto w-full space-y-2.5">
 
         <!-- Accordion Item 1: Physical Signals -->
         <div class="accordion-card" id="card-physical">
@@ -127,26 +130,26 @@
                 onclick="toggleAccordion('physical')"
                 aria-expanded="false"
                 aria-controls="content-physical"
-                class="w-full flex items-center justify-between p-4 text-left font-heading font-bold text-lg text-ttn-navy hover:text-ttn-trust-blue transition-colors cursor-pointer select-none"
+                class="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-heading font-bold text-base sm:text-lg text-ttn-navy hover:text-ttn-trust-blue transition-colors cursor-pointer select-none"
             >
-                <div class="flex items-center space-x-3">
-                    <span class="w-3 h-3 rounded-full bg-ttn-trust-blue inline-block"></span>
-                    <span class="text-base sm:text-lg">Physical Signals</span>
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-ttn-trust-blue inline-block"></span>
+                    <span>Physical Signals</span>
                 </div>
-                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-ttn-navy group-hover:bg-ttn-ice-blue">
-                    <svg class="plus-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-ttn-navy group-hover:bg-ttn-ice-blue">
+                    <svg class="plus-icon w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
                     </svg>
                 </div>
             </button>
 
             <div class="accordion-content" id="content-physical" aria-hidden="true">
-                <div class="accordion-inner px-4 pb-4 sm:px-5 sm:pb-5 space-y-4 pt-1">
-                    <p class="italic text-slate-600 text-sm sm:text-base border-t border-ttn-ice-blue/60 pt-3 font-medium">
+                <div class="accordion-inner px-3.5 pb-3.5 sm:px-4 sm:pb-4 space-y-3 pt-1">
+                    <p class="italic text-slate-600 text-xs sm:text-sm border-t border-ttn-ice-blue/60 pt-2.5 font-medium">
                         Your body speaks first, often before your conscious mind has caught up.
                     </p>
 
-                    <ul class="space-y-2.5 text-xs sm:text-sm text-ttn-slate">
+                    <ul class="space-y-2 text-xs sm:text-sm text-ttn-slate">
                         <li class="flex items-start space-x-2">
                             <span class="text-ttn-trust-blue font-bold select-none">•</span>
                             <span><strong class="text-ttn-navy font-semibold">Heart rate increases:</strong> you can feel your pulse in your chest or neck</span>
@@ -165,12 +168,12 @@
                         </li>
                     </ul>
 
-                    <div class="p-3 bg-slate-50 border-l-4 border-ttn-trust-blue rounded-r-md text-xs sm:text-sm text-slate-700">
+                    <div class="p-2.5 bg-slate-50 border-l-4 border-ttn-trust-blue rounded-r-md text-xs sm:text-sm text-slate-700">
                         These are not signs of weakness. They are your nervous system doing exactly what it's designed to do. The skill is catching them <strong>before</strong> they catch you.
                     </div>
 
                     <!-- Physical Signals Video -->
-                    <div class="pt-1">
+                    <div class="pt-0.5">
                         <video id="video-physical" controls playsinline loop preload="metadata" title="Physical Signals Demonstration">
                             <source src="Physical_Signs_202608021736.mp4" type="video/mp4">
                             Your browser does not support video playback.
@@ -187,26 +190,26 @@
                 onclick="toggleAccordion('cognitive')"
                 aria-expanded="false"
                 aria-controls="content-cognitive"
-                class="w-full flex items-center justify-between p-4 text-left font-heading font-bold text-lg text-ttn-navy hover:text-ttn-trust-blue transition-colors cursor-pointer select-none"
+                class="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-heading font-bold text-base sm:text-lg text-ttn-navy hover:text-ttn-trust-blue transition-colors cursor-pointer select-none"
             >
-                <div class="flex items-center space-x-3">
-                    <span class="w-3 h-3 rounded-full bg-ttn-sky-cyan inline-block"></span>
-                    <span class="text-base sm:text-lg">Cognitive Signals</span>
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-ttn-sky-cyan inline-block"></span>
+                    <span>Cognitive Signals</span>
                 </div>
-                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-ttn-navy group-hover:bg-ttn-ice-blue">
-                    <svg class="plus-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-ttn-navy group-hover:bg-ttn-ice-blue">
+                    <svg class="plus-icon w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
                     </svg>
                 </div>
             </button>
 
             <div class="accordion-content" id="content-cognitive" aria-hidden="true">
-                <div class="accordion-inner px-4 pb-4 sm:px-5 sm:pb-5 space-y-4 pt-1">
-                    <p class="italic text-slate-600 text-sm sm:text-base border-t border-ttn-ice-blue/60 pt-3 font-medium">
+                <div class="accordion-inner px-3.5 pb-3.5 sm:px-4 sm:pb-4 space-y-3 pt-1">
+                    <p class="italic text-slate-600 text-xs sm:text-sm border-t border-ttn-ice-blue/60 pt-2.5 font-medium">
                         While your body braces, your thinking shifts too. These changes are just as important to notice.
                     </p>
 
-                    <ul class="space-y-2.5 text-xs sm:text-sm text-ttn-slate">
+                    <ul class="space-y-2 text-xs sm:text-sm text-ttn-slate">
                         <li class="flex items-start space-x-2">
                             <span class="text-ttn-sky-cyan font-bold select-none">•</span>
                             <span><strong class="text-ttn-navy font-semibold">Tunnel vision:</strong> you stop hearing what the patient is actually saying and start rehearsing your response</span>
@@ -221,12 +224,12 @@
                         </li>
                     </ul>
 
-                    <div class="p-3 bg-slate-50 border-l-4 border-ttn-sky-cyan rounded-r-md text-xs sm:text-sm text-slate-700">
+                    <div class="p-2.5 bg-slate-50 border-l-4 border-ttn-sky-cyan rounded-r-md text-xs sm:text-sm text-slate-700">
                         When you notice these shifts, pay attention. You are standing at the edge of your window of tolerance and what you do in the next few seconds determines which side of it you stay on.
                     </div>
 
                     <!-- Cognitive Signals Video -->
-                    <div class="pt-1">
+                    <div class="pt-0.5">
                         <video id="video-cognitive" controls playsinline loop preload="metadata" title="Cognitive Signals Demonstration">
                             <source src="Cognitive_Signals_202608021739.mp4" type="video/mp4">
                             Your browser does not support video playback.
@@ -286,7 +289,7 @@
                     const playPromise = targetVideo.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(error => {
-                            // Mute auto-play fallback if browser blocks unmuted sound
+                            // Fallback if browser requires user interaction for audio
                             targetVideo.muted = true;
                             targetVideo.play();
                         });
@@ -294,20 +297,28 @@
                 }
             }
 
-            // Send updated height message to parent Mindsmith window if embedded
+            // Report height change to parent iFrame container
             notifyParentHeight();
         }
 
-        // Auto-inform parent iframe height
+        // Send exact pixel height to Mindsmith AI parent iframe
         function notifyParentHeight() {
-            setTimeout(() => {
-                const height = document.documentElement.scrollHeight || document.body.scrollHeight;
-                window.parent.postMessage({ frameHeight: height }, '*');
-            }, 320);
+            requestAnimationFrame(() => {
+                const container = document.getElementById('app-container');
+                const height = container ? container.getBoundingClientRect().height + 16 : document.body.scrollHeight;
+                window.parent.postMessage({ frameHeight: height, height: height, type: 'resize' }, '*');
+            });
         }
 
+        // Listen for window load & resizes
         window.addEventListener('load', notifyParentHeight);
         window.addEventListener('resize', notifyParentHeight);
+
+        // Auto-observe size shifts (e.g., video loading)
+        if (typeof ResizeObserver !== 'undefined') {
+            const ro = new ResizeObserver(() => notifyParentHeight());
+            ro.observe(document.getElementById('app-container'));
+        }
     </script>
 </body>
 </html>
