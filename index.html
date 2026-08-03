@@ -1,11 +1,69 @@
-<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical & Cognitive Signals - TTN Component</title>
+    
+    <!-- Google Fonts: Montserrat (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ttn-navy': '#0C2340',
+                        'ttn-trust-blue': '#005EB8',
+                        'ttn-sky-cyan': '#59CBE8',
+                        'ttn-action-orange': '#FE5000',
+                        'ttn-slate': '#333F48',
+                        'ttn-ice-blue': '#DBE2E9',
+                        'ttn-success': '#00BF6F',
+                        'ttn-gold': '#FFC72C'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --ttn-navy: #0C2340;
+            --ttn-trust-blue: #005EB8;
+            --ttn-sky-cyan: #59CBE8;
+            --ttn-action-orange: #FE5000;
+            --ttn-slate: #333F48;
+            --ttn-ice-blue: #DBE2E9;
+            --radius-card: 8px;
+            --shadow-main: 0 4px 12px rgba(12, 35, 64, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--ttn-slate);
+            background-color: transparent;
+            margin: 0;
+            padding: 12px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
         /* Focus state according to TTN Library standard */
         button:focus-visible {
             outline: 2px solid var(--ttn-sky-cyan);
             outline-offset: 4px;
         }
 
-        /* Custom Accordion Animations */
+        /* Strict Collapsed & Expanded Accordion Grid Mechanics */
         .accordion-content {
             display: grid;
             grid-template-rows: 0fr;
@@ -28,9 +86,228 @@
 
         .accordion-card {
             border: 1px solid var(--ttn-ice-blue);
-<!-- ... existing code ... -->
-```
+            border-radius: var(--radius-card);
+            background-color: #FFFFFF;
+            box-shadow: var(--shadow-main);
+            transition: border-color 200ms ease, box-shadow 200ms ease;
+        }
 
-### What was updated:
-- **Strict Collapsed Visibility (`visibility: hidden` & `opacity: 0`):** Added explicit visibility and opacity rules to `.accordion-content` when closed. This ensures that 100% of the interior content (including introductory text lines and top borders) remains completely hidden until opened.
-- **`overflow: hidden` on Inner Wrapper:** Prevents sub-pixel text bleeding in modern browser engines during CSS grid transition calculations.
+        .accordion-card.active {
+            border-color: var(--ttn-trust-blue);
+        }
+
+        /* Icon Rotation */
+        .plus-icon {
+            transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion-card.active .plus-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Video styling */
+        video {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 6px;
+            background-color: #0C2340;
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-start">
+
+    <div class="max-w-2xl mx-auto w-full space-y-3">
+
+        <!-- Accordion Item 1: Physical Signals -->
+        <div class="accordion-card" id="card-physical">
+            <button 
+                type="button"
+                onclick="toggleAccordion('physical')"
+                aria-expanded="false"
+                aria-controls="content-physical"
+                class="w-full flex items-center justify-between p-4 text-left font-heading font-bold text-lg text-ttn-navy hover:text-ttn-trust-blue transition-colors cursor-pointer select-none"
+            >
+                <div class="flex items-center space-x-3">
+                    <span class="w-3 h-3 rounded-full bg-ttn-trust-blue inline-block"></span>
+                    <span class="text-base sm:text-lg">Physical Signals</span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-ttn-navy group-hover:bg-ttn-ice-blue">
+                    <svg class="plus-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+            </button>
+
+            <div class="accordion-content" id="content-physical" aria-hidden="true">
+                <div class="accordion-inner px-4 pb-4 sm:px-5 sm:pb-5 space-y-4 pt-1">
+                    <p class="italic text-slate-600 text-sm sm:text-base border-t border-ttn-ice-blue/60 pt-3 font-medium">
+                        Your body speaks first, often before your conscious mind has caught up.
+                    </p>
+
+                    <ul class="space-y-2.5 text-xs sm:text-sm text-ttn-slate">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-trust-blue font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Heart rate increases:</strong> you can feel your pulse in your chest or neck</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-trust-blue font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Face or ears feel 'hot':</strong> blood rushes to the surface</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-trust-blue font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Breathing becomes shallow:</strong> short, rapid breaths high in the chest</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-trust-blue font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Jaw clenches or fists tighten:</strong> your muscles prepare for action</span>
+                        </li>
+                    </ul>
+
+                    <div class="p-3 bg-slate-50 border-l-4 border-ttn-trust-blue rounded-r-md text-xs sm:text-sm text-slate-700">
+                        These are not signs of weakness. They are your nervous system doing exactly what it's designed to do. The skill is catching them <strong>before</strong> they catch you.
+                    </div>
+
+                    <!-- Physical Signals Video -->
+                    <div class="pt-1">
+                        <video id="video-physical" controls playsinline loop preload="metadata" title="Physical Signals Demonstration">
+                            <source src="Physical_Signs_202608021736.mp4" type="video/mp4">
+                            Your browser does not support video playback.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion Item 2: Cognitive Signals -->
+        <div class="accordion-card" id="card-cognitive">
+            <button 
+                type="button"
+                onclick="toggleAccordion('cognitive')"
+                aria-expanded="false"
+                aria-controls="content-cognitive"
+                class="w-full flex items-center justify-between p-4 text-left font-heading font-bold text-lg text-ttn-navy hover:text-ttn-trust-blue transition-colors cursor-pointer select-none"
+            >
+                <div class="flex items-center space-x-3">
+                    <span class="w-3 h-3 rounded-full bg-ttn-sky-cyan inline-block"></span>
+                    <span class="text-base sm:text-lg">Cognitive Signals</span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-ttn-navy group-hover:bg-ttn-ice-blue">
+                    <svg class="plus-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+            </button>
+
+            <div class="accordion-content" id="content-cognitive" aria-hidden="true">
+                <div class="accordion-inner px-4 pb-4 sm:px-5 sm:pb-5 space-y-4 pt-1">
+                    <p class="italic text-slate-600 text-sm sm:text-base border-t border-ttn-ice-blue/60 pt-3 font-medium">
+                        While your body braces, your thinking shifts too. These changes are just as important to notice.
+                    </p>
+
+                    <ul class="space-y-2.5 text-xs sm:text-sm text-ttn-slate">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-sky-cyan font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Tunnel vision:</strong> you stop hearing what the patient is actually saying and start rehearsing your response</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-sky-cyan font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Sudden urge to interrupt:</strong> you feel compelled to correct, defend and to have the last word</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-ttn-sky-cyan font-bold select-none">•</span>
+                            <span><strong class="text-ttn-navy font-semibold">Internal monologue shifts:</strong> you stop thinking <em>'How can I help?'</em> and start thinking <em>'How dare they?'</em></span>
+                        </li>
+                    </ul>
+
+                    <div class="p-3 bg-slate-50 border-l-4 border-ttn-sky-cyan rounded-r-md text-xs sm:text-sm text-slate-700">
+                        When you notice these shifts, pay attention. You are standing at the edge of your window of tolerance and what you do in the next few seconds determines which side of it you stay on.
+                    </div>
+
+                    <!-- Cognitive Signals Video -->
+                    <div class="pt-1">
+                        <video id="video-cognitive" controls playsinline loop preload="metadata" title="Cognitive Signals Demonstration">
+                            <source src="Cognitive_Signals_202608021739.mp4" type="video/mp4">
+                            Your browser does not support video playback.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAccordion(type) {
+            const isPhysical = type === 'physical';
+            const targetType = isPhysical ? 'physical' : 'cognitive';
+            const otherType = isPhysical ? 'cognitive' : 'physical';
+
+            const targetCard = document.getElementById(`card-${targetType}`);
+            const targetContent = document.getElementById(`content-${targetType}`);
+            const targetBtn = targetCard.querySelector('button');
+            const targetVideo = document.getElementById(`video-${targetType}`);
+
+            const otherCard = document.getElementById(`card-${otherType}`);
+            const otherContent = document.getElementById(`content-${otherType}`);
+            const otherBtn = otherCard.querySelector('button');
+            const otherVideo = document.getElementById(`video-${otherType}`);
+
+            const isAlreadyOpen = targetContent.classList.contains('open');
+
+            // 1. Close the other accordion section and pause its video
+            otherContent.classList.remove('open');
+            otherCard.classList.remove('active');
+            otherContent.setAttribute('aria-hidden', 'true');
+            otherBtn.setAttribute('aria-expanded', 'false');
+            if (otherVideo) {
+                otherVideo.pause();
+            }
+
+            // 2. Toggle target accordion section
+            if (isAlreadyOpen) {
+                targetContent.classList.remove('open');
+                targetCard.classList.remove('active');
+                targetContent.setAttribute('aria-hidden', 'true');
+                targetBtn.setAttribute('aria-expanded', 'false');
+                if (targetVideo) {
+                    targetVideo.pause();
+                }
+            } else {
+                targetContent.classList.add('open');
+                targetCard.classList.add('active');
+                targetContent.setAttribute('aria-hidden', 'false');
+                targetBtn.setAttribute('aria-expanded', 'true');
+                
+                // Play video immediately upon expanding
+                if (targetVideo) {
+                    targetVideo.currentTime = 0;
+                    const playPromise = targetVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Mute auto-play fallback if browser blocks unmuted sound
+                            targetVideo.muted = true;
+                            targetVideo.play();
+                        });
+                    }
+                }
+            }
+
+            // Send updated height message to parent Mindsmith window if embedded
+            notifyParentHeight();
+        }
+
+        // Auto-inform parent iframe height
+        function notifyParentHeight() {
+            setTimeout(() => {
+                const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+                window.parent.postMessage({ frameHeight: height }, '*');
+            }, 320);
+        }
+
+        window.addEventListener('load', notifyParentHeight);
+        window.addEventListener('resize', notifyParentHeight);
+    </script>
+</body>
+</html>
